@@ -1,0 +1,19 @@
+
+.maindiv{
+    border: 5px solid slategrey;
+    margin-bottom:5px;
+    text-align:center;
+    padding-top:5px;
+    padding-bottom:5px;
+    height: auto;
+    width:auto;
+    background-color:gray;
+   display:flex;
+   justify-content: space-around;
+    
+}
+.mydiv2{
+    border:5px solid blue;
+    text-align:center;
+}
+

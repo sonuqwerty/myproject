@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load cart %}
+{% block content %}
+
+<table class = "table">
+<tr>
+    <th>s.no</th>
+    <th>Name</th>
+    <th>Image</th>
+    <th>price</th>
+    <th>quantity</th>
+    <th>total</th>
+</tr>
+{% for cart in cart_pro %}
+<tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{cart.name}}</td>
+    <td><img src="{{cart.image.url}}" alt="" height = 150 width = 150></td>
+    <td>{{cart.price}}</td>
+    <td>{{cart|cartquantity:request.session.cart}}</td>
+    <td>{{cart|total:request.session.cart}}</td>
+
+</tr>
+
+
+{% endfor %}
+<tfoot>
+<tr>
+<td>Total price</td>
+<td>{{cart_pro|grand_total:request.session.cart}}</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+<div class = "m-3 p-3">
+<a data-bs-toggle = "modal" data-bs-target = "#checkout" class = "btn btn-dark border rounded col-lg-3 float-end">
+Checkout
+</a>
+</div>
+{% else %}
+<h1>plz add product</h1>
+{% endif %}
+<!-- Modal -->
+<div class="modal fade" id="checkout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Product Description</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action={% url 'checkout' %} method = "post">
+                {% csrf_token %}
+            <div class = "mb - 3">
+            <label for="address" class = "form-label">Address</label>
+            <input type="text" name = "address" id = "address" class = "form-control">
+            
+            <label for="mob" class = "form-label">Mobile</label>
+            <input type="number" name = "mobile" id = "mob" class = "form-control">
+            
+            
+            </div>
+            <br>
+            <input type="submit" class="btn btn-primary" value = "checkout">
+            <!-- Button trigger modal -->
+            
+            
+            </form>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock content %}
